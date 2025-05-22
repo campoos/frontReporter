@@ -1,7 +1,7 @@
 "use strict"
 
 async function pegarEstados() {
-    const response = await fetch("gi n trabalha e n passou o link do get dos estados")
+    const response = await fetch("http://localhost:3030/v1/controle-estado/estado")
     const estados = await response.json();
 
     return estados
@@ -13,10 +13,9 @@ async function carregarEstados() {
 
         const estados = await pegarEstados()
 
-        //ordena alfabeticamente
-        estados.sort((a, b) => a.nome.localeCompare(b.nome)); 
+        const extracaoEstados = estados.estado
 
-        estados.forEach((item) => {
+        extracaoEstados.forEach((item) => {
             const optionEstado = document.createElement("option")
             optionEstado.value = item.sigla
             optionEstado.textContent = item.nome
