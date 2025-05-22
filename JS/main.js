@@ -1,5 +1,7 @@
 "use strict"
 
+const botaoRegistro = document.addEventListener("buttonRegistrar") 
+
 async function pegarEstados() {
     const response = await fetch("http://localhost:3030/v1/controle-estado/estado")
     const estados = await response.json();
@@ -19,6 +21,7 @@ async function carregarEstados() {
             const optionEstado = document.createElement("option")
             optionEstado.value = item.sigla
             optionEstado.textContent = item.nome
+            optionEstado.id = item.id_estado
 
             selectEstados.appendChild(optionEstado)
         });
@@ -27,5 +30,8 @@ async function carregarEstados() {
         alert('Não foi possível carregar os estados.');
     }
 }
+
+
+
 
 window.addEventListener("DOMContentLoaded", carregarEstados)
