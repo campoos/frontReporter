@@ -1,0 +1,150 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: "Inter", sans-serif;
+
+    height: 100vh;
+    width: 100vw;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-image: url("../SRC/IMGS/LOGIN/background-image2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative; /* Necessário para o pseudo-elemento */
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("../SRC/IMGS/LOGIN/background-image2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1; /* Coloca a imagem no fundo */
+}
+
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(115, 12, 12, 0.25); /* Vermelho com 40% de transparência */
+    z-index: -1; /* Coloca a sobreposição atrás do conteúdo */
+}
+
+img {
+    height: 5rem;
+    margin: 1rem;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.container {
+    height: 80%;
+    width: 55%;
+    padding: 5rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container h1 {
+    font-size: 5rem;
+    color: white;
+
+    margin-bottom: 3rem;
+}
+
+form {
+    width: 100%;
+}
+
+form input {
+    width: 100%;
+    height: 5rem;
+    margin-bottom: 2.5rem;
+    padding-left: 2rem;
+
+    font-size: 1.5rem;
+    font-weight: 100;
+
+    background-color: rgba(52, 58, 64, 0.83);
+    color: white;
+
+    border: 1px solid white;
+}
+
+form input::placeholder {
+    color: rgb(255, 255, 255);
+}
+
+form select {
+    width: 100%;
+    height: 5rem;
+    margin-bottom: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+
+    font-size: 1.5rem;
+
+    background-color: rgba(52, 58, 64, 0.83);
+    color: white;
+
+    border: 1px solid white;
+}
+
+.container button {
+    padding: 0.6rem 4.5rem;
+    margin-bottom: 1.5rem;
+    margin-top: 5rem;
+
+    font-size: 2rem;
+
+    color: white;
+    background-color: #C1121F;
+
+    border: none;
+}
+
+.container button:hover {
+    cursor: pointer;
+}
+
+.container h2 {
+    color: white;
+    font-weight: 100;
+}
+
+.container a {
+    color: white;
+
+    font-weight: 100;
+    font-size: 1.5rem;
+
+    margin-left: 0.7rem;
+}
+
+.container .registro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
