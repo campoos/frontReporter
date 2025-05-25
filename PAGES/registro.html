@@ -9,21 +9,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../CSS/login.css">
+    <link rel="stylesheet" href="../CSS/registro.css">
+    <script src="../JS/registro.js" defer></script>
     <title>Olho no bairro</title>
 </head>
 <body>
-    <img src="./SRC/IMGS/logo.png" alt="">
+    <img src="../SRC/IMGS/logo.png" alt="">
     <div class="container">
-        <h1>LOGIN</h1>
+        <h1>REGISTER</h1>
         <form action="">
-            <input type="text" placeholder="email">
-            <input type="text" placeholder="senha">
+            <input type="text" id="nome" placeholder="nome">
+            <input type="text" id="email" placeholder="email">
+            <input type="text" id="senha" placeholder="senha">
         </form>
-        <button>Login</button>
-        <div class="registro">
-            <h2>Don't have an account?</h2>
-            <a href="../index.html">Sign up</a>
+        <button id="buttonRegistrar">Register</button>
+        <div class="login">
+            <h2>Do you have an account?</h2>
+            <a href="../index.html">Login</a>
         </div>
     </div>
 </body>

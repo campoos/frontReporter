@@ -110,8 +110,6 @@ form select {
     color: white;
 
     border: 1px solid white;
-
-    overflow-y: scroll;
 }
 
 .container button {
@@ -145,8 +143,10 @@ form select {
     margin-left: 0.7rem;
 }
 
-.container .login {
+.container .registro {
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (max-width: 375px){
@@ -191,11 +191,11 @@ form select {
         font-size: 1rem;
     }
 
-    .login h2 {
+    .registro h2 {
         font-size: 1rem;
     }
 
-    .login a {
+    .registro a {
         font-size: 1rem;
     }
 }
