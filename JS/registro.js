@@ -28,7 +28,7 @@ async function cadastrarUsuario(event){
             email: dadosRegistro.email
         }
 
-        const response1 = await fetch("http://localhost:3030/v1/controle-usuario/usuario/email", {
+        const response1 = await fetch("http://10.107.134.3:8080/v1/controle-usuario/usuario/email", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(emailValidacao)
@@ -40,13 +40,15 @@ async function cadastrarUsuario(event){
             alert("email já cadastrado")
         }else{
             
-            const response2 = await fetch("http://localhost:3030/v1/controle-usuario/usuario", {
+            const response2 = await fetch("http://10.107.134.3:8080/v1/controle-usuario/usuario", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(dadosRegistro)
             })
 
             const result = await response2.json()
+
+            console.log(response2)
 
             if (response2.status === 201){
                 alert("Cadastro realizado com sucesso")
