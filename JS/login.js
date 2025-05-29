@@ -35,7 +35,7 @@ async function fazerLogin(event){
 
          if (response.status === 200){
                 alert("Login realizado com sucesso")
-                window.location.href = "./PAGES/mapa.html"
+                window.location.href = "./PAGES/feed.html"
             }else {
                 alert("Erro ao logar: " + result.message)
             } 

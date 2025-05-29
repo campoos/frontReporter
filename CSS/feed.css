@@ -1,0 +1,199 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: "Inter", sans-serif;
+
+    height: 100vh;
+    width: 100vw;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-image: url("../SRC/IMGS/LOGIN/background-image2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative; /* Necessário para o pseudo-elemento */
+}
+
+body::before {
+    content: ""; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("../SRC/IMGS/LOGIN/background-image2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1; /* Coloca a imagem no fundo */
+}
+
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(115, 12, 12, 0.25); /* Vermelho com 40% de transparência */
+    z-index: -1; /* Coloca a sobreposição atrás do conteúdo */
+} 
+
+header {
+    background-color: rgba(255, 255, 255, 0.426);
+
+    width: 100%;
+    height: 7vh;
+    padding: 1rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header img {
+    height: 3.5rem;
+}
+
+header #postarBotao:hover {
+    cursor: pointer;
+}
+
+header .pesquisa {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    
+    width: 70%;
+    height: 100%;
+}
+
+header .pesquisa input {
+    width: 100%;
+    height: 100%;
+
+    border: none;
+    outline: none;
+    border-radius: 25px;
+    padding-left: 3rem;
+
+    font-size: 1.5rem;
+    font-weight: thin;
+
+    background-color: rgba(52, 58, 64, 0.7);
+    color: rgb(206, 206, 206);
+}
+
+header .pesquisa input::placeholder {
+    color: rgb(206, 206, 206);
+}
+
+header .pesquisa input:focus {
+    box-shadow: 0 0 0 1px rgb(206, 206, 206);
+}
+
+header .pesquisa img {
+    position: absolute;
+    right: 0;
+
+    height: 3.5rem;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    overflow-y: scroll;
+}
+
+main .ocorrencias {
+    margin-top: 2rem;
+    width: 50%;
+}
+
+main .ocorrencias .ocorrencia {
+    margin-bottom: 2rem;
+    padding: 1rem;
+
+    width: 100%;
+    height: 70%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    background-color: black;
+}
+
+main .ocorrencias .ocorrencia .headerOcorrencia{
+    display: flex;
+    align-items: center;
+    background-color: black;
+
+    gap: 0.5rem;
+}
+
+main .ocorrencias .ocorrencia .headerOcorrencia img {
+    height: 3.5rem;
+    filter: invert(1);
+}
+
+main .ocorrencias .ocorrencia .headerOcorrencia h1 {
+    font-size: 1.2rem;
+    font-weight: 200;
+
+    color: white;
+}
+
+main .ocorrencias .ocorrencia .mainOcorrencia {
+    height: 75%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgb(45, 45, 45);
+}
+
+main .ocorrencias .ocorrencia .mainOcorrencia img {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+main .ocorrencias .ocorrencia .footerOcorrencia .icones img{
+    height: 3rem;
+    filter: invert(1);
+}
+
+main .ocorrencias .ocorrencia .footerOcorrencia .descricao {
+    height: 53%;
+    width: 100%;
+    
+    overflow: hidden;
+}
+
+main .ocorrencias .ocorrencia .footerOcorrencia .descricao span{
+    color: white;
+
+    font-size: 1.1rem;
+    font-weight: 100;
+
+    height: 100%;
+    width: 100%;
+
+    display: -webkit-box;                 /* necessário */
+    -webkit-line-clamp: 3;               /* quantas linhas mostrar */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
