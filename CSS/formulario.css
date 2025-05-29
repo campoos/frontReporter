@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: "Inter", sans-serif;
+
+    height: 100vh;
+    width: 100vw;
+    padding: 3rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-image: url("../SRC/IMGS/LOGIN/background-image2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative; /* Necessário para o pseudo-elemento */
+}
+
+body::before {
+    content: ""; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("../SRC/IMGS/LOGIN/background-image2.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1; /* Coloca a imagem no fundo */
+}
+
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(115, 12, 12, 0.25); /* Vermelho com 40% de transparência */
+    z-index: -1; /* Coloca a sobreposição atrás do conteúdo */
+} 
+
+#botaoVoltar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    
+    padding-left: 1rem;
+
+    font-size: 3rem;
+}
+
+#botaoVoltar:hover {
+    cursor: pointer;
+}
+
+main {
+    height: 100%;
+    width: 100%;
+
+    background-color: aqua;
+}
+
+main .dadosOcorrencia {
+    background-color: blueviolet;
+
+    height: 15rem;
+}
+
+main .dadosOcorrencia .tituloCategoria{
+    background-color: red;
+
+    height: 4rem;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+main .dadosOcorrencia .tituloCategoria #titulo {
+    height: 100%;
+    width: 70%;
+
+    border-radius: 30px;
+
+    padding-left: 2rem;
+
+    font-size: 1.5rem;
+}
+
+main .dadosOcorrencia .tituloCategoria #categoria {
+    height: 100%;
+    width: 25%;
+
+    border-radius: 30px;
+
+    padding-left: 2rem;
+
+    font-size: 1.5rem;
+}
+
+main .dadosOcorrencia #descricao{
+    height: 50%;
+
+    border-radius: 30px;
+
+    font-size: 1.5rem;
+}

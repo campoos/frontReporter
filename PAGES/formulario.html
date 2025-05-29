@@ -4,9 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../CSS/formulario.css">
     <title>Document</title>
 </head>
 <body>
-    
+    <h1 id="botaoVoltar" onclick="window.location.href='./opcao.html'">←</h1>
+    <main>
+        <div class="dadosOcorrencia">
+            <div class="tituloCategoria">
+                <input type="text" placeholder="Titulo..." id="titulo">
+                <select name="" id="categoria">
+                    <option value="" disabled selected>Categoria</option>
+                    <option value="">Buraco</option>
+                    <option value="">Incendio</option>
+                    <option value="">Maconha</option>
+                </select>
+            </div>
+            <input type="text" placeholder="Descricao..." id="descricao">
+        </div>
+    </main>
 </body>
 </html>
