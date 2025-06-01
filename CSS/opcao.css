@@ -148,6 +148,10 @@ main .container .cardFormulario {
     transition: transform 01.s ease, box-shadow 0.1s ease;
 }
 
+main .container .cardFormulario:hover {
+    transform: scale(1.01);
+}
+
 main .container .cardFormulario:active {
     transform: scale(0.98);
     box-shadow: 0 2px 4px rgba(0,0,0,0.3) inset;
@@ -177,6 +181,10 @@ main .container .cardMapa {
     border-radius: 50px;
 
     transition: transform 01.s ease, box-shadow 0.1s ease;
+}
+
+main .container .cardMapa:hover {
+    transform: scale(1.01);
 }
 
 main .container .cardMapa:active {

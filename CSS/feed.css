@@ -133,6 +133,9 @@ main .ocorrencias .ocorrencia {
     justify-content: space-between;
 
     background-color: black;
+
+    overflow-y: hidden;
+    text-overflow: ellipsis;
 }
 
 main .ocorrencias .ocorrencia .headerOcorrencia{
@@ -176,24 +179,21 @@ main .ocorrencias .ocorrencia .footerOcorrencia .icones img{
 }
 
 main .ocorrencias .ocorrencia .footerOcorrencia .descricao {
-    height: 53%;
+    height: 28%;
     width: 100%;
-    
-    overflow: hidden;
 }
 
-main .ocorrencias .ocorrencia .footerOcorrencia .descricao span{
-    color: white;
+main .ocorrencias .ocorrencia .footerOcorrencia .descricao span {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* número de linhas */
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 
+    color: white;
     font-size: 1.1rem;
     font-weight: 100;
 
-    height: 100%;
+    height: auto;
     width: 100%;
-
-    display: -webkit-box;                 /* necessário */
-    -webkit-line-clamp: 3;               /* quantas linhas mostrar */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }

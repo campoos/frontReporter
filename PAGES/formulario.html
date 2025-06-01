@@ -5,24 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="../CSS/formulario.css">
+    <script src="../JS/formulario.js" defer></script>
     <title>Document</title>
 </head>
 <body>
     <h1 id="botaoVoltar" onclick="window.location.href='./opcao.html'">←</h1>
     <main>
-        <div class="dadosOcorrencia">
-            <div class="tituloCategoria">
-                <input type="text" placeholder="Titulo..." id="titulo">
-                <select name="" id="categoria">
-                    <option value="" disabled selected>Categoria</option>
-                    <option value="">Buraco</option>
-                    <option value="">Incendio</option>
-                    <option value="">Maconha</option>
-                </select>
+        <form action="">
+            <div class="dadosOcorrencia">
+                <h1>Caso</h1>
+                <div class="tituloCategoria">
+                    <input type="text" placeholder="Título..." id="titulo" required>
+                    <select name="" id="categoria" required>
+                        <option value="" disabled selected>Categoria</option>
+                    </select>
+                </div>
+                <textarea 
+                    id="descricao" 
+                    name="comentario" 
+                    rows="5" 
+                    maxlength="500"
+                    cols="40" 
+                    placeholder="Descrição..." 
+                    required></textarea>
             </div>
-            <input type="text" placeholder="Descricao..." id="descricao">
-        </div>
+            <div class="dadosEndereco">
+                <h1>Endereço</h1>
+                <div class="logradouroBairro">
+                    <input type="text" placeholder="Logradouro..." id="logradouro" required>
+                    <input type="text" placeholder="Bairro..." id="bairro" required>
+                </div>
+                <div class="estadoCidade">
+                    <input type="text" placeholder="Estado..." id="estado" required>
+                    <input type="text" placeholder="Cidade..." id="cidade" required>
+                </div>
+            </div>
+            <button id="buttonCEP">Buscar Endereço por CEP?</button>
+            <button id="buttonRegistro">Registrar</button>
+        </form>
     </main>
 </body>
 </html>
