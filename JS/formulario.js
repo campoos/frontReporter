@@ -1,5 +1,13 @@
 "use strict"
 
+//token sas
+//sp=rwd&st=2025-06-02T01:10:28Z&se=2025-07-01T09:10:28Z&sv=2024-11-04&sr=c&sig=1%2BCu0taa%2F8a4GMPdZKZlGIItkBXWK2c4lFPRGUEaiTQ%3D
+
+//url de sas
+//https://ocorrenciasimagens.blob.core.windows.net/imagens?sp=rwd&st=2025-06-02T01:10:28Z&se=2025-07-01T09:10:28Z&sv=2024-11-04&sr=c&sig=1%2BCu0taa%2F8a4GMPdZKZlGIItkBXWK2c4lFPRGUEaiTQ%3D
+
+let cepDigitadoManualmente = null;
+
 document.addEventListener('DOMContentLoaded', async() => {
     const categorias = document.getElementById("categoria")
 
@@ -27,9 +35,14 @@ function getDataAtual() {
 }
 
 async function getDadosEndereco(endereco) {
+    if (!endereco.logradouro || !endereco.bairro || !endereco.cidade || !endereco.estado) {
+        alert("Por favor, preencha todos os campos de endereço corretamente.");
+        return null;
+    }   
     const enderecoCompleto = `${endereco.logradouro}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}, Brasil`;
 
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(enderecoCompleto)}`;
+    console.log(url)
 
     try {
         const response = await fetch(url, {
@@ -71,7 +84,8 @@ async function getDadosEndereco(endereco) {
             longitude: longitude
         };
     } catch (error) {
-        console.error("Erro ao buscar coordenadas:", error);
+        console.error(error);
+        alert(error);
         return null;
     }
 }
@@ -83,7 +97,7 @@ async function cadastrarEndereco(endereco) {
             bairro: endereco.bairro,
             cidade: endereco.cidade,
             estado: endereco.estado,
-            cep: endereco.cep,
+            cep: cepDigitadoManualmente || endereco.cep,
             longitude: endereco.longitude,
             latitude: endereco.latitude
         }
@@ -150,6 +164,84 @@ async function capturarDados(){
     return dadosCompleto
 }
 
+async function uploadImagem(){
+    const usuario = JSON.parse(localStorage.getItem("dadosUsuario"));
+    const idUsuario = usuario[0].id_usuario;
+
+    const ocorrencia = JSON.parse(localStorage.getItem("dadosOcorrencia"));
+    const idOcorrencia = ocorrencia[0].id_ocorrencia;
+
+    const fileInput = document.getElementById("upload");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Nenhuma imagem selecionada para upload.")
+        console.warn("Nenhuma imagem selecionada para upload.");
+        return;
+    }
+
+    // Nome do arquivo no Blob Storage (pode acrescentar timestamp pra evitar conflito)
+    const nomeArquivo = `${Date.now()}_${file.name}`;
+
+    // URL base do Blob Storage com SAS token
+    const blobUrlBase = "https://ocorrenciasimagens.blob.core.windows.net/imagens";
+    const sasToken = "sp=rwd&st=2025-06-02T01:10:28Z&se=2025-07-01T09:10:28Z&sv=2024-11-04&sr=c&sig=1%2BCu0taa%2F8a4GMPdZKZlGIItkBXWK2c4lFPRGUEaiTQ%3D";
+
+    const uploadUrl = `${blobUrlBase}/${encodeURIComponent(nomeArquivo)}?${sasToken}`;
+
+    try {
+        // Faz upload com PUT direto para Azure Blob
+        const uploadResponse = await fetch(uploadUrl, {
+            method: "PUT",
+            headers: {
+                "x-ms-blob-type": "BlockBlob",
+                "Content-Type": file.type
+            },
+            body: file
+        });
+
+        if (!uploadResponse.ok) {
+            throw new Error(`Erro no upload do arquivo: ${uploadResponse.statusText}`);
+        }
+
+        // Após upload, montar URL pública para acesso (geralmente mesma URL sem query SAS para leitura, ou com, depende do acesso)
+        // Aqui vamos manter a URL com SAS para garantir acesso
+        const urlPublica = uploadUrl;
+
+        // Montar objeto para enviar ao backend
+        const dadosMidia = {
+            nome_arquivo: nomeArquivo,
+            url: urlPublica,
+            tamanho: file.size,
+            id_ocorrencia: idOcorrencia,
+            id_usuario: idUsuario
+        };
+
+        // Enviar dados para o backend
+        const backendResponse = await fetch("http://192.168.0.103:8080/v1/controle-usuario/midias", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dadosMidia)
+        });
+
+        const backendResult = await backendResponse.json();
+
+        console.log(backendResult)
+
+        if (backendResult.status_code !== 200) {
+            throw new Error("Erro ao salvar dados da mídia no banco.");
+        }
+
+        alert("Ocorrencia registrada com sucesso")
+        window.location.href = "./PAGES/mapa.html"
+    } catch (error) {
+        console.error("Falha no upload da imagem:", error);
+        alert("Falha ao fazer upload da imagem. Tente novamente.");
+    }
+}
+
 async function cadastroOcorrencia(event){
     try {
         event.preventDefault()
@@ -166,8 +258,7 @@ async function cadastroOcorrencia(event){
 
         if (result.status_code == 201){
             localStorage.setItem("dadosOcorrencia", JSON.stringify(result.result))
-            alert("Ocorrencia registrada com sucesso")
-            window.location.href = "./PAGES/mapa.html"
+            await uploadImagem()
         }
         else {
             alert("Não foi possível registrar sua ocorrencia")
@@ -177,5 +268,95 @@ async function cadastroOcorrencia(event){
     }
 }
 
+function fecharTelaCEP(event) {
+    event.preventDefault()
+
+    const main = document.getElementById("main")
+    const containerCEP = document.getElementById("containerCEP")
+
+    main.removeChild(containerCEP)
+}
+
+async function preencherDadosCEP(event) {
+    event.preventDefault();
+
+    const cepInput = document.getElementById("inputCEP");
+    const cep = cepInput.value.replace(/[^\d-]/g, '');
+    cepDigitadoManualmente = cep
+
+    const buttonCEP = document.getElementById("buttonEnviarCEP");
+
+    // Verifica se já existe uma mensagem de erro e remove
+    const erroAnterior = document.getElementById("erroCEP");
+    if (erroAnterior) erroAnterior.remove();
+
+    try {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await response.json();
+
+        if (data.erro) {
+            throw new Error("CEP não encontrado.");
+        }
+
+        // Preenche os campos com os dados retornados
+        document.getElementById("logradouro").value = data.logradouro || '';
+        document.getElementById("bairro").value = data.bairro || '';
+        document.getElementById("cidade").value = data.localidade || '';
+        document.getElementById("estado").value = data.estado || '';
+
+        fecharTelaCEP(event); // Fecha a tela do CEP
+
+    } catch (error) {
+        const erroMsg = document.createElement("p");
+        erroMsg.textContent = "Erro: CEP inválido ou não encontrado.";
+        erroMsg.style.color = "red";
+        erroMsg.style.marginTop = "10px";
+        erroMsg.id = "erroCEP";
+
+        buttonCEP.parentElement.appendChild(erroMsg);
+    }
+}
+
+function telaCEP(){
+    const main = document.getElementById("main")
+
+    const container =  document.createElement("div")
+    container.className = "containerCEP"
+    container.id = "containerCEP"
+
+    const formContainer =  document.createElement("form")
+    formContainer.className = "formCEP"
+    formContainer.action = ""
+
+    const botaoVoltar = document.createElement("h1")
+    botaoVoltar.textContent = "←"
+    botaoVoltar.id = "botaoVoltarCEP"
+
+    const inputCep = document.createElement("input")
+    inputCep.placeholder = "Digite seu CEP"
+    inputCep.id = "inputCEP"
+
+    const buttonEnviarCEP = document.createElement("button")
+    buttonEnviarCEP.textContent = "enviar CEP"
+    buttonEnviarCEP.id = "buttonEnviarCEP"
+
+    formContainer.appendChild(inputCep)
+    formContainer.appendChild(buttonEnviarCEP)
+
+    container.appendChild(botaoVoltar)
+    container.appendChild(formContainer)
+
+    main.appendChild(container)
+
+    document.getElementById("buttonEnviarCEP")
+    .addEventListener("click", preencherDadosCEP)
+
+    document.getElementById("botaoVoltarCEP")
+    .addEventListener("click", fecharTelaCEP)
+}
+
 document.getElementById("buttonRegistro")
     .addEventListener("click", cadastroOcorrencia)
+
+document.getElementById("buttonCEP")
+.addEventListener("click", telaCEP)
