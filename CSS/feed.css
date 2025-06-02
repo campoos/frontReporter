@@ -141,13 +141,20 @@ main .ocorrencias .ocorrencia {
 main .ocorrencias .ocorrencia .headerOcorrencia{
     display: flex;
     align-items: center;
+    justify-content: space-between;
     background-color: black;
 
     gap: 0.5rem;
 }
 
+main .ocorrencias .ocorrencia .headerOcorrencia .usuario {
+    display: flex;
+    align-items: center;
+}
+
 main .ocorrencias .ocorrencia .headerOcorrencia img {
     height: 3.5rem;
+    margin-right: 0.5rem;
     filter: invert(1);
 }
 
@@ -180,6 +187,15 @@ main .ocorrencias .ocorrencia .footerOcorrencia .icones img{
 
 main .ocorrencias .ocorrencia .footerOcorrencia .descricao {
     height: 28%;
+    width: 100%;
+}
+
+main .ocorrencias .ocorrencia .footerOcorrencia .descricao p {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+
+    height: auto;
     width: 100%;
 }
 

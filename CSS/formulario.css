@@ -214,7 +214,7 @@ main #buttonCEP {
 
     height: 4rem;
     width: 30%;
-    margin-top: 1rem;
+    margin-bottom: 4rem;
 
     text-decoration: underline;
 
@@ -223,6 +223,10 @@ main #buttonCEP {
     background-color: transparent;
     border: none;
     border-radius: 50px;
+}
+
+main #buttonCEP:hover {
+    cursor: pointer;
 }
 
 main #buttonRegistro {
@@ -245,4 +249,59 @@ main #buttonRegistro {
 
 main #buttonRegistro:hover {
     cursor: pointer;
+}
+
+main .containerCEP {
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 30%;
+    width: 30%;
+
+    padding: 1rem 3rem;
+
+    background-color: white;
+    border: 1px solid black;
+}
+
+main .containerCEP #botaoVoltarCEP:hover {
+    cursor: pointer;
+}
+
+main .containerCEP #inputCEP {
+    width: 100%;
+    height: 3rem;
+
+    border-radius: 30px;
+
+    font-size: 1rem;
+
+    padding: 1rem 2rem;
+    outline: none;
+}
+
+
+main .containerCEP #buttonEnviarCEP {
+    width: 50%;
+    height: 3rem;
+    margin-top: 2rem;
+
+    border-radius: 30px;
+
+    font-size: 1rem;
+
+    outline: none;
+}
+
+main .containerCEP #buttonEnviarCEP:hover {
+    cursor: pointer;
+}
+
+main form #upload {
+    margin-top: 3rem;
+    font-size: 1.2rem;
+    color: white;
 }
