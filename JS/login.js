@@ -23,7 +23,7 @@ async function fazerLogin(event){
             return alert("preencha todos os dados!")
         }
 
-            const response = await fetch("http://192.168.0.103:8080/v1/controle-usuario/login", {
+            const response = await fetch("http://10.107.134.3:8080/v1/controle-usuario/login", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(dadosLogin)

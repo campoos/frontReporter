@@ -1,5 +1,210 @@
 "use strict"
 
+document.addEventListener('DOMContentLoaded', async () => {
+
+    const map = L.map('map').setView([-23.55052, -46.633308], 17); // São Paulo como fallback
+
+  
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap',
+    }).addTo(map);
+
+    async function criarFormulario(lat, lng) {
+        if (document.getElementById("formularioFlutuante")) return;
+    
+        const formContainer = document.createElement("div");
+        formContainer.id = "formularioFlutuante";
+    
+        const botaoFechar = document.createElement("button");
+        botaoFechar.id = "botaoVoltarFormulario";
+        botaoFechar.textContent = "✕";
+        botaoFechar.onclick = () => formContainer.remove();
+        formContainer.appendChild(botaoFechar);
+    
+        const titulo = document.createElement("h2");
+        titulo.textContent = "Nova Ocorrência";
+        formContainer.appendChild(titulo);
+    
+        const form = document.createElement("form");
+    
+        const dadosOcorrencia = document.createElement("div");
+        dadosOcorrencia.className = "dadosOcorrencia";
+    
+        const tituloCategoria = document.createElement("div");
+        tituloCategoria.className = "tituloCategoria";
+    
+        const labelTitulo = document.createElement("h2");
+        labelTitulo.textContent = "Título";
+        const inputTitulo = document.createElement("input");
+        inputTitulo.type = "text";
+        inputTitulo.id = "titulo";
+        inputTitulo.placeholder = "titulo...";
+        inputTitulo.required = true;
+    
+        const selectCategoria = document.createElement("select");
+        selectCategoria.id = "categoria";
+        selectCategoria.required = true;
+        const optDefault = document.createElement("option");
+        optDefault.value = "";
+        optDefault.disabled = true;
+        optDefault.selected = true;
+        optDefault.textContent = "Categoria...";
+
+        selectCategoria.appendChild(optDefault);
+    
+        tituloCategoria.appendChild(labelTitulo);
+        tituloCategoria.appendChild(inputTitulo);
+        tituloCategoria.appendChild(selectCategoria);
+        dadosOcorrencia.appendChild(tituloCategoria);
+    
+        const campoDescricao = document.createElement("div");
+        campoDescricao.className = "campoDescricao";
+        const labelDescricao = document.createElement("h2");
+        labelDescricao.textContent = "Descrição";
+        const textarea = document.createElement("textarea");
+        textarea.id = "descricao";
+        textarea.placeholder = "descricao...";
+        textarea.name = "comentario";
+        textarea.rows = 5;
+        textarea.maxLength = 500;
+        textarea.required = true;
+    
+        campoDescricao.appendChild(labelDescricao);
+        campoDescricao.appendChild(textarea);
+        dadosOcorrencia.appendChild(campoDescricao);
+    
+        form.appendChild(dadosOcorrencia);
+    
+        const dadosEndereco = document.createElement("div");
+        dadosEndereco.className = "dadosEndereco";
+    
+        const labelEndereco = document.createElement("h2");
+        labelEndereco.textContent = "Endereço";
+    
+        const divLogradouro = document.createElement("div");
+        divLogradouro.className = "logradouro";
+        const inputLogradouro = document.createElement("input");
+        inputLogradouro.type = "text";
+        inputLogradouro.id = "logradouro";
+        inputLogradouro.placeholder = "logradouro...";
+        inputLogradouro.required = true;
+        divLogradouro.appendChild(inputLogradouro);
+    
+        const divBairroCidade = document.createElement("div");
+        divBairroCidade.className = "bairroCidade";
+        const inputBairro = document.createElement("input");
+        inputBairro.type = "text";
+        inputBairro.id = "bairro";
+        inputBairro.placeholder = "bairro...";
+        inputBairro.required = true;
+        const inputCidade = document.createElement("input");
+        inputCidade.type = "text";
+        inputCidade.id = "cidade";
+        inputCidade.placeholder = "cidade...";
+        inputCidade.required = true;
+        divBairroCidade.appendChild(inputBairro);
+        divBairroCidade.appendChild(inputCidade);
+    
+        const divEstado = document.createElement("div");
+        divEstado.className = "estadoCidade";
+        const inputEstado = document.createElement("input");
+        inputEstado.type = "text";
+        inputEstado.id = "estado";
+        inputEstado.placeholder = "estado...";
+        inputEstado.required = true;
+        divEstado.appendChild(inputEstado);
+    
+        dadosEndereco.appendChild(labelEndereco);
+        dadosEndereco.appendChild(divLogradouro);
+        dadosEndereco.appendChild(divBairroCidade);
+        dadosEndereco.appendChild(divEstado);
+    
+        form.appendChild(dadosEndereco);
+    
+        const inputUpload = document.createElement("input");
+        inputUpload.type = "file";
+        inputUpload.id = "upload";
+        inputUpload.accept = "image/*";
+    
+        const buttonCEP = document.createElement("button");
+        buttonCEP.type = "button";
+        buttonCEP.id = "buttonCEP";
+        buttonCEP.textContent = "Buscar CEP";
+    
+        const buttonRegistro = document.createElement("button");
+        buttonRegistro.type = "submit";
+        buttonRegistro.id = "buttonRegistro";
+        buttonRegistro.textContent = "Registrar";
+    
+        form.appendChild(inputUpload);
+        form.appendChild(buttonCEP);
+        form.appendChild(buttonRegistro);
+    
+        form.onsubmit = (e) => {
+            e.preventDefault();
+            console.log("Título:", inputTitulo.value);
+            console.log("Descrição:", textarea.value);
+            // aqui você pode adicionar a lógica de envio de dados
+            formContainer.remove();
+        };
+    
+        formContainer.appendChild(form);
+        document.body.appendChild(formContainer);
+
+        document.getElementById("buttonRegistro")
+            .addEventListener("click", cadastroOcorrencia)
+        
+        document.getElementById("buttonCEP")
+        .addEventListener("click", telaCEP)
+
+        const categorias = await fetch(`http://10.107.134.3:8080/v1/controle-usuario/categoria`)
+
+        const categoriasResult = await categorias.json()
+
+        categoriasResult.categorias.forEach(item => {
+            const selectCategorias = document.getElementById("categoria")
+
+            const categoria = document.createElement("option")
+            categoria.textContent = item.nome_categoria
+            categoria.value = item.id_categoria
+
+            selectCategorias.appendChild(categoria)
+        });
+
+    }
+    
+
+    localizarUsuario(map)
+
+    map.on("click", function(e){
+    const {lat, lng} = e.latlng
+    console.log("Clicou em:", lat.toFixed(6), lng.toFixed(6))
+    criarFormulario(lat, lng)
+    })
+
+
+});
+
+function localizarUsuario(map){
+    if (!navigator.geolocation){
+        console.warn("Geolocalização não suportada pelo navegador.")
+        return
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const {latitude, longitude} = position.coords
+            map.setView([latitude, longitude], 16)
+
+            L.marker([latitude, longitude]).addTo(map)
+                .bindPopup("Você está aqui!")
+                .openPopup();
+        },
+        (error) => {
+            console.warn("Erro ao obter a localização:", error.message)
+        }
+    )
+}
 //token sas
 //sp=rwd&st=2025-06-02T01:10:28Z&se=2025-07-01T09:10:28Z&sv=2024-11-04&sr=c&sig=1%2BCu0taa%2F8a4GMPdZKZlGIItkBXWK2c4lFPRGUEaiTQ%3D
 
@@ -7,22 +212,6 @@
 //https://ocorrenciasimagens.blob.core.windows.net/imagens?sp=rwd&st=2025-06-02T01:10:28Z&se=2025-07-01T09:10:28Z&sv=2024-11-04&sr=c&sig=1%2BCu0taa%2F8a4GMPdZKZlGIItkBXWK2c4lFPRGUEaiTQ%3D
 
 let cepDigitadoManualmente = null;
-
-document.addEventListener('DOMContentLoaded', async() => {
-    const categorias = document.getElementById("categoria")
-
-    const response = await fetch("http://10.107.134.3:8080/v1/controle-usuario/categoria")
-
-    const result = await response.json();
-
-    result.categorias.forEach(item => {
-        let categoria = document.createElement("option")
-        categoria.value = item.id_categoria
-        categoria.textContent = item.nome_categoria
-
-        categorias.appendChild(categoria)
-    });
-});
 
 function getDataAtual() {
     const hoje = new Date();
@@ -42,7 +231,6 @@ async function getDadosEndereco(endereco) {
     const enderecoCompleto = `${endereco.logradouro}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}, Brasil`;
 
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(enderecoCompleto)}`;
-    console.log(url)
 
     try {
         const response = await fetch(url, {
@@ -255,7 +443,6 @@ async function cadastroOcorrencia(event){
         const result = await response.json()
 
         if (result.status_code == 201){
-            console.log(result.result)
             localStorage.setItem("dadosOcorrencia", JSON.stringify(result.result))
             await uploadImagem()
         }
@@ -270,7 +457,7 @@ async function cadastroOcorrencia(event){
 function fecharTelaCEP(event) {
     event.preventDefault()
 
-    const main = document.getElementById("main")
+    const main = document.getElementById("formularioFlutuante")
     const containerCEP = document.getElementById("containerCEP")
 
     main.removeChild(containerCEP)
@@ -317,7 +504,7 @@ async function preencherDadosCEP(event) {
 }
 
 function telaCEP(){
-    const main = document.getElementById("main")
+    const main = document.getElementById("formularioFlutuante")
 
     const container =  document.createElement("div")
     container.className = "containerCEP"
@@ -353,9 +540,3 @@ function telaCEP(){
     document.getElementById("botaoVoltarCEP")
     .addEventListener("click", fecharTelaCEP)
 }
-
-document.getElementById("buttonRegistro")
-    .addEventListener("click", cadastroOcorrencia)
-
-document.getElementById("buttonCEP")
-.addEventListener("click", telaCEP)

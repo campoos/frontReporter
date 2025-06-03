@@ -19,7 +19,48 @@
   <title>Mapa</title>
 </head>
 <body>
-  <h1>Mapa do leaflet.js</h1>
-  <div id="map"></div>
+    
+  <div class="feed">
+    <header>
+      <img src="../SRC/IMGS/FEED/plus.png" alt="postarBotao" onclick="window.location.href = './opcao.html' ">
+      <div class="pesquisa">
+        <input type="text" placeholder="Endereços de ocorrências...">
+        <img src="../SRC/IMGS/FEED/plus.png" alt="pesquisarBotao">
+      </div>
+    </header>
+
+    <section id="ocorrencias">
+      <div class="ocorrencia" id="ocorrencia">
+        <div class="headerOcorrencia" id="headerOcorrencia">
+          <div class="usuario">
+            <h2>João</h2>
+            <img src="../SRC/IMGS/FEED/plus.png" alt="">
+          </div>
+        
+          <h2>NOME</h2>
+          <div class="enderecoOcorrencia" id="enderecoOcorrencia">
+              <h2>Logradouro, Cidade - Estado</h2>
+          </div>
+        </div>
+        <div class="mainOcorrencia" id="mainOcorrencia">
+          <img src="../SRC/IMGS/FEED/buraco_na_rua.jpg" alt="imagem da ocorrencia">
+        </div>
+        <div class="footerOcorrencia" id="footerOcorrencia">
+          <div class="icones" id="icones">
+            <img src="../SRC/IMGS/FEED/plus.png" alt="">
+            <img src="../SRC/IMGS/FEED/plus.png" alt="">
+          </div>
+          <div class="descricao" id="descricao">
+            <p>titulo</p>
+            <span>descrição</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+  </div>
+  <div id="map">
+    <h1></h1>
+  </div>
 </body>
 </html>
