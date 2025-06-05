@@ -58,6 +58,22 @@ header {
     align-items: center;
 }
 
+header .iconesEsquerda {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+header .iconesEsquerda #mapaBotao{
+    height: 3rem;
+    margin-bottom: 0.3rem;
+}
+
+header .iconesEsquerda #mapaBotao:hover {
+    cursor: pointer;
+}
+
 header img {
     height: 3.5rem;
 }

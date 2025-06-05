@@ -12,6 +12,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function criarFormulario(lat, lng) {
         if (document.getElementById("formularioFlutuante")) return;
     
+        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
+
+        const response = await fetch(url, {
+            headers: {
+                'User-Agent': 'olho_bairro/1.0 (joaosantos20071009@gmail.com)'
+            }
+        });
+
+        const data = await response.json();
+        const address = data.address;
+
+        const logradouro = address.road || address.pedestrian || address.footway || "";
+        const bairro = address.suburb || address.neighbourhood || "";
+        const cidade = address.city || address.town || address.village || "";
+        const estado = address.state || "";
+
+
         const formContainer = document.createElement("div");
         formContainer.id = "formularioFlutuante";
     
@@ -87,6 +104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         inputLogradouro.type = "text";
         inputLogradouro.id = "logradouro";
         inputLogradouro.placeholder = "logradouro...";
+        inputLogradouro.value = logradouro
         inputLogradouro.required = true;
         divLogradouro.appendChild(inputLogradouro);
     
@@ -96,11 +114,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         inputBairro.type = "text";
         inputBairro.id = "bairro";
         inputBairro.placeholder = "bairro...";
+        inputBairro.value = bairro
         inputBairro.required = true;
         const inputCidade = document.createElement("input");
         inputCidade.type = "text";
         inputCidade.id = "cidade";
         inputCidade.placeholder = "cidade...";
+        inputCidade.value = cidade
         inputCidade.required = true;
         divBairroCidade.appendChild(inputBairro);
         divBairroCidade.appendChild(inputCidade);
@@ -110,6 +130,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const inputEstado = document.createElement("input");
         inputEstado.type = "text";
         inputEstado.id = "estado";
+        inputEstado.value = estado
         inputEstado.placeholder = "estado...";
         inputEstado.required = true;
         divEstado.appendChild(inputEstado);
@@ -157,7 +178,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById("buttonCEP")
         .addEventListener("click", telaCEP)
 
-        const categorias = await fetch(`http://10.107.134.3:8080/v1/controle-usuario/categoria`)
+        const categorias = await fetch(`http://localhost:8080/v1/controle-usuario/categoria`)
 
         const categoriasResult = await categorias.json()
 
@@ -290,7 +311,7 @@ async function cadastrarEndereco(endereco) {
             latitude: endereco.latitude
         }
         
-        const response = await fetch("http://10.107.134.3:8080/v1/controle-usuario/endereco", {
+        const response = await fetch("http://localhost:8080/v1/controle-usuario/endereco", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(objetoEndereco)
@@ -406,7 +427,7 @@ async function uploadImagem(){
         };
 
         // Enviar dados para o backend
-        const backendResponse = await fetch("http://10.107.134.3:8080/v1/controle-usuario/midias", {
+        const backendResponse = await fetch("http://localhost:8080/v1/controle-usuario/midias", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -434,7 +455,7 @@ async function cadastroOcorrencia(event){
 
         const dadosOcorrencia = await capturarDados()
 
-        const response = await fetch("http://10.107.134.3:8080/v1/controle-usuario/ocorrencias", {
+        const response = await fetch("http://localhost:8080/v1/controle-usuario/ocorrencias", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(dadosOcorrencia)
