@@ -1,9 +1,9 @@
 "use strict"
 
 document.addEventListener('DOMContentLoaded', async() => {
-    const ocorrencias = document.getElementById("ocorrencias")
+    const ocorrencias = document.getElementById("ocorrencias")   
 
-    const response = await fetch("http://localhost:8080/v1/controle-usuario/ocorrencias")
+    const response = await fetch("http://10.107.144.11:8080/v1/controle-usuario/ocorrencias")
 
     const result = await response.json();
 

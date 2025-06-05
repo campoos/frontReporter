@@ -8,7 +8,7 @@ body {
 font-family: "Inter", sans-serif;
 
 display: flex;
-flex-direction: row;
+flex-direction: column;
 align-items: center;
 
 height: 100vh;
@@ -316,4 +316,10 @@ border-radius: 20px;
     width: 30%;
 
     font-size: 1.5rem;
+}
+
+#texto {
+    font-size: 3rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }

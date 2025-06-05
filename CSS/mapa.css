@@ -82,38 +82,37 @@ header .pesquisa img {
     overflow-y: scroll;
 }
 
-#ocorrencia {
-    border-radius: 10px;
+.ocorrencia {
+    border-radius: 20px 20px 0px 0px;
     color: white;
     background-color: #444;
 }
 
-#ocorrencia .headerOcorrencia {
+.ocorrencia .headerOcorrencia {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 0.5rem 0.2rem 0.5rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
 }
 
-#ocorrencia .headerOcorrencia .usuario {
+.ocorrencia .headerOcorrencia .usuario {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-#ocorrencia .headerOcorrencia .usuario img {
-    height: 2rem;
+#ocorrencias .ocorrencia .headerOcorrencia .usuario img {
+    height: 2.5rem;
     margin-right: 0.5rem;
 }
 
-#ocorrencia .headerOcorrencia .usuario h2 {
-    height: 2rem;
+.ocorrencia .headerOcorrencia .usuario h2 {
     margin-right: 0.5rem;
     font-weight: 300;
 }
 
 
-#ocorrencia .headerOcorrencia .enderecoOcorrencia h2 {
+.ocorrencia .headerOcorrencia .enderecoOcorrencia h2 {
     font-size: 1.2rem;
     font-weight: 300;
 }
@@ -125,6 +124,7 @@ header .pesquisa img {
 
 .footerOcorrencia {
     display: flex;
+    flex-direction: column;
     align-items: center;
     padding: 0.3rem 0.5rem;
     color: white;
@@ -132,14 +132,47 @@ header .pesquisa img {
 
 .footerOcorrencia .icones {
     display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footerOcorrencia .icones .iconesBotao {
+    display: flex;
     align-items: center;
     justify-content: center;
+
+    gap: 1rem;
 }
 
 .footerOcorrencia .icones img {
     height: 1.8rem;
-    margin-right: 0.7rem;
     cursor: pointer;
+}
+
+.footerOcorrencia .icones .tags {
+    display: flex;
+
+    gap: 1rem;
+
+    margin-right: 0rem;
+}
+
+.footerOcorrencia .icones .tags p {
+    display: flex;
+    gap: 1rem;
+    margin-right: 0.5rem;
+
+    color: #565656;
+    background-color: white;
+    padding: 0.4rem 1.5rem;
+    border-radius: 20px;
+}
+
+.descricao {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
 }
 
 .descricao p {
@@ -152,8 +185,8 @@ header .pesquisa img {
     color: #ccc;
     
     display: -webkit-box;
-    -webkit-line-clamp: 1; /* número de linhas */
-    line-clamp: 1;
+    -webkit-line-clamp: 2; /* número de linhas */
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }

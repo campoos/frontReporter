@@ -1,6 +1,47 @@
 "use strict"
 
 document.addEventListener('DOMContentLoaded', async () => {
+    const ocorrencias = document.getElementById("ocorrencias")   
+
+    const response = await fetch("http://10.107.144.11:8080/v1/controle-usuario/ocorrencias")
+
+    const result = await response.json();
+
+    result.ocorrencias.forEach(item => {
+        ocorrencias.innerHTML += `
+            <div class="ocorrencia" id=${item.id_ocorrencia}>
+                <div class="headerOcorrencia" id="headerOcorrencia">
+                <div class="usuario">
+                    <img src="../SRC/IMGS/FEED/plus.png" alt="">
+                    <h2>${item.usuario[0].nome}</h2>
+                </div>
+                <div class="enderecoOcorrencia" id="enderecoOcorrencia">
+                    <h2>${item.endereco[0].cidade}, ${item.endereco[0].estado}</h2>
+                </div>
+                </div>
+                <div class="mainOcorrencia" id="mainOcorrencia">
+                <img src=${item.midia[0].url} alt="imagem da ocorrencia">
+                </div>
+                <div class="footerOcorrencia" id="footerOcorrencia">
+                <div class="icones" id="icones">
+                    <div class="iconesBotao">
+                    <img src="../SRC/IMGS/FEED/plus.png" alt="">
+                    <img src="../SRC/IMGS/FEED/plus.png" alt="">
+                    </div>
+                    <div class="tags">
+                        <p>${item.categoria[0].nome_categoria}</p>
+                        <p>${item.stat[0].nome_status}</p>
+                    </div>
+                </div>
+                <div class="descricao" id="descricao">
+                    <p>${item.titulo}</p>
+                    <span>${item.descricao}</span>
+                </div>
+                </div>
+            </div>
+        `     
+    });
+
 
     // Função para obter localização inicial
     async function obterLocalizacaoInicial() {
@@ -9,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (ocorrencia && ocorrencia.length > 0) {
             try {
                 const idEndereco = ocorrencia[0].id_endereco;
-                const response = await fetch(`http://localhost:8080/v1/controle-usuario/endereco/${idEndereco}`);
+                const response = await fetch(`http://10.107.144.11:8080/v1/controle-usuario/endereco/${idEndereco}`);
                 const result = await response.json();
                 const latitude = parseFloat(result.enderecos[0].latitude);
                 const longitude = parseFloat(result.enderecos[0].longitude);
@@ -55,7 +96,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Se houver ocorrência no localStorage, adicionar marcador
     if (ocorrencia) {
         const idOcorrencia = ocorrencia[0].id_ocorrencia;
-        const imagem = await fetch(`http://localhost:8080/v1/controle-usuario/midias-ocorrencias/${idOcorrencia}`);
+        const imagem = await fetch(`http://10.107.144.11:8080/v1/controle-usuario/midias-ocorrencias/${idOcorrencia}`);
         const imagemResult = await imagem.json();
 
         const objetoOcorrencia = `
@@ -76,11 +117,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Carregar todas as ocorrências com pins
     async function getOcorrencias() {
         try {
-            const ocorrencias = await fetch("http://localhost:8080/v1/controle-usuario/ocorrencias");
+            const ocorrencias = await fetch("http://10.107.144.11:8080/v1/controle-usuario/ocorrencias");
             const ocorrenciasResult = await ocorrencias.json();
 
             ocorrenciasResult.ocorrencias.forEach(async item => {
-                const imagem = await fetch(`http://localhost:8080/v1/controle-usuario/midias-ocorrencias/${item.id_ocorrencia}`);
+                const imagem = await fetch(`http://10.107.144.11:8080/v1/controle-usuario/midias-ocorrencias/${item.id_ocorrencia}`);
                 const imagemResult = await imagem.json();
 
                 const objetoOcorrencia = `
@@ -103,22 +144,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     await getOcorrencias();
-
-    // Popular feed lateral com ocorrências
-    const ocorrenciasFeed = document.getElementById("ocorrencias");
-    const responseFeed = await fetch("http://localhost:8080/v1/controle-usuario/ocorrencias");
-    const resultFeed = await responseFeed.json();
-
-    resultFeed.ocorrenciasFeed.forEach(item => {
-        ocorrenciasFeed.innerHTML += `
-            <div class="ocorrencia" id="${item.id_ocorrencia}">
-                <div class="headerOcorrencia">
-                    <div class="usuario">
-                        <img>
-                    </div>
-                </div>
-            </div>
-        `;
-    });
-
 });
