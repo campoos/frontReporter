@@ -195,3 +195,69 @@ main .container .cardMapa:active {
 main .container .cardMapa img {
     height: 10rem;
 }
+
+@media(max-width:375px){
+    body header {
+        padding: 0.5rem;
+    }
+
+    body header #botaoVoltar {
+        padding: 0;
+        margin-bottom: 0.3rem;
+        font-size: 2rem;
+    }
+
+    body header img {
+        height: 25px;
+    }
+
+    body header .pesquisa img {
+        height: 25px;
+    }
+
+    body header .pesquisa input {
+        padding-left: 1rem;
+
+        font-size: 1rem;
+    }
+
+    body main {
+        padding: 0.5rem;
+    }
+
+    body main .container {
+        gap: 1rem;
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    body main .container .cardFormulario {
+        height: 15rem;
+        width: 15rem;
+        gap: 2rem;
+    }
+
+    body main .container .cardFormulario img {
+        height: 50px;
+    }
+
+    body main .container .cardFormulario h1 {
+        font-size: 1.2rem;
+    }
+
+    body main .container .cardMapa {
+        height: 15rem;
+        width: 15rem;
+        gap: 2rem;
+    }
+
+    body main .container .cardMapa img {
+        height: 50px;
+    }
+
+    body main .container .cardMapa h1 {
+        font-size: 1.2rem;
+    }
+}

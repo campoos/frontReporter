@@ -18,14 +18,16 @@
   <script src="../JS/mapa.js" defer></script>
   <title>Mapa</title>
 </head>
-<body>
-  <div class="feed">
+<body >
+  <img src="../SRC/IMGS/MAPA/feed-off.png" alt="" id="botaoFeedOff">
+  <div class="feed" id="feed">
     <header>
       <a onclick="window.location.href = './feed.html' ">←</a>
       <div class="pesquisa">
         <input type="text" placeholder="Endereços de ocorrências...">
-        <img src="../SRC/IMGS/FEED/plus.png" alt="pesquisarBotao">
+        <img src="../SRC/IMGS/FEED/plus.png" alt="pesquisarBotao" id="botaoPesquisa">
       </div>
+      <img id="botaoFeedOn" src="../SRC/IMGS/MAPA/feed-on.png" alt="Alternar feed">
     </header>
 
     <section id="ocorrencias">

@@ -11,11 +11,32 @@ body {
     width: 100vw;
 }
 
+#botaoFeedOff {
+    position: absolute;
+
+    height: 2rem;
+    margin: 1.5rem;
+
+    margin-left: 4rem;
+
+    z-index: 2;
+}
+
+#botaoFeedOff:hover {
+    cursor: pointer;
+}
+
 .feed {
-    width: 25%;
+    transition: all 0.3s ease;
+
+    z-index: 3;
+
+    width: 30%;
     height: 100%;
     background-color: rgba(104, 98, 98, 0.842);
     color: rgb(255, 255, 255);
+
+    display: block;
 }
 
 header {
@@ -34,6 +55,8 @@ header a {
     
     color: black;
     font-size: 2.5rem;
+
+    margin-bottom: 0.5rem;
 }
 
 header .pesquisa {
@@ -64,6 +87,17 @@ header .pesquisa input::placeholder {
 header .pesquisa input:focus {
     outline: none;
     box-shadow: 0 0 0 1px #aaa;
+}
+
+header img {
+    height: 1.5rem;
+
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+header img:hover {
+    cursor: pointer;
 }
 
 header .pesquisa img {
@@ -185,13 +219,17 @@ header .pesquisa img {
     color: #ccc;
     
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* número de linhas */
-    line-clamp: 2;
+    -webkit-line-clamp: 1; /* número de linhas */
+    line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
 #map {
-    width: 75%;
+    flex-grow: 1;
     height: 100%;
+
+    z-index: 1;
+
+    transition: width 0.3s ease;
 }
