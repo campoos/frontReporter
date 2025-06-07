@@ -7,8 +7,8 @@
 body{
     font-family: "Inter", sans-serif;
 
-    height: 100vh;
-    width: 100vw;
+    height: 100dvh;
+    width: 100dvw;
 
     display: flex;
     flex-direction: column;
@@ -65,20 +65,17 @@ header .iconesEsquerda {
     gap: 2rem;
 }
 
-header .iconesEsquerda #mapaBotao{
-    height: 3rem;
-    margin-bottom: 0.3rem;
-}
-
-header .iconesEsquerda #mapaBotao:hover {
-    cursor: pointer;
-}
 
 header img {
-    height: 3.5rem;
+    height: 3rem;
 }
 
-header #postarBotao:hover {
+header .iconesEsquerda #mapaBotao {
+    height: 2.5rem;
+}
+
+
+header img:hover {
     cursor: pointer;
 }
 
@@ -120,7 +117,7 @@ header .pesquisa img {
     position: absolute;
     right: 0;
 
-    height: 3.5rem;
+    height: 3rem;
 }
 
 main {
@@ -228,4 +225,80 @@ main .ocorrencias .ocorrencia .footerOcorrencia .descricao span {
 
     height: auto;
     width: 100%;
+}
+
+@media(max-width:375px){
+    body {
+        height: 100dvh;
+    }
+
+    header {
+        padding: 0.5rem;
+    }
+
+    header img {
+        height: 25px;
+    }
+
+    header .iconesEsquerda {
+        gap: 0.5rem;
+    }
+
+    header .iconesEsquerda #mapaBotao {
+        height: 22px;
+        margin-bottom: 2px;
+    }
+
+
+    header .pesquisa input {
+        padding-left: 1rem;
+
+        font-size: 1rem;
+    }
+    
+    header .pesquisa img {
+        height: 25px;
+    }
+
+    main .ocorrencias {
+        width: 95%;
+    }
+
+    main .ocorrencias .ocorrencia {
+        padding: 0.4rem;
+    }
+
+    main .ocorrencias .ocorrencia .headerOcorrencia {
+        margin-bottom: 0.3rem;
+    }
+
+
+    main .ocorrencias .ocorrencia .headerOcorrencia img {
+        height: 25px;
+        margin-right: 5px;
+    }
+
+    main .ocorrencias .ocorrencia .headerOcorrencia h1 {
+        font-size: 12px;
+    }
+
+    main .ocorrencias .ocorrencia .headerOcorrencia .enderecoOcorrencia h1 {
+        font-size: 10px;
+    }
+
+    main .ocorrencias .ocorrencia .footerOcorrencia .icones {
+        margin-top: 0.3rem;
+    }
+
+    main .ocorrencias .ocorrencia .footerOcorrencia .icones img {
+        height: 25px;
+    }
+
+    main .ocorrencias .ocorrencia .footerOcorrencia .descricao p {
+        font-size: 1rem;
+    }
+
+    main .ocorrencias .ocorrencia .footerOcorrencia .descricao span {
+        font-size: 0.7rem;
+    }
 }

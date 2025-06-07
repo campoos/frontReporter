@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const ocorrencias = document.getElementById("ocorrencias")   
 
-    const response = await fetch("http://10.107.144.11:8080/v1/controle-usuario/ocorrencias")
+    const response = await fetch("http://localhost:8080/v1/controle-usuario/ocorrencias")
 
     const result = await response.json();
 
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (ocorrencia && ocorrencia.length > 0) {
             try {
                 const idEndereco = ocorrencia[0].id_endereco;
-                const response = await fetch(`http://10.107.144.11:8080/v1/controle-usuario/endereco/${idEndereco}`);
+                const response = await fetch(`http://localhost:8080/v1/controle-usuario/endereco/${idEndereco}`);
                 const result = await response.json();
                 const latitude = parseFloat(result.enderecos[0].latitude);
                 const longitude = parseFloat(result.enderecos[0].longitude);
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Se houver ocorrência no localStorage, adicionar marcador
     if (ocorrencia) {
         const idOcorrencia = ocorrencia[0].id_ocorrencia;
-        const imagem = await fetch(`http://10.107.144.11:8080/v1/controle-usuario/midias-ocorrencias/${idOcorrencia}`);
+        const imagem = await fetch(`http://localhost:8080/v1/controle-usuario/midias-ocorrencias/${idOcorrencia}`);
         const imagemResult = await imagem.json();
 
         const objetoOcorrencia = `
@@ -117,11 +117,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Carregar todas as ocorrências com pins
     async function getOcorrencias() {
         try {
-            const ocorrencias = await fetch("http://10.107.144.11:8080/v1/controle-usuario/ocorrencias");
+            const ocorrencias = await fetch("http://localhost:8080/v1/controle-usuario/ocorrencias");
             const ocorrenciasResult = await ocorrencias.json();
 
             ocorrenciasResult.ocorrencias.forEach(async item => {
-                const imagem = await fetch(`http://10.107.144.11:8080/v1/controle-usuario/midias-ocorrencias/${item.id_ocorrencia}`);
+                const imagem = await fetch(`http://localhost:8080/v1/controle-usuario/midias-ocorrencias/${item.id_ocorrencia}`);
                 const imagemResult = await imagem.json();
 
                 const objetoOcorrencia = `

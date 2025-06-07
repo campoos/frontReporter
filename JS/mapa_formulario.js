@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById("buttonCEP")
         .addEventListener("click", telaCEP)
 
-        const categorias = await fetch(`http://10.107.144.11:8080/v1/controle-usuario/categoria`)
+        const categorias = await fetch(`http://localhost:8080/v1/controle-usuario/categoria`)
 
         const categoriasResult = await categorias.json()
 
@@ -311,7 +311,7 @@ async function cadastrarEndereco(endereco) {
             latitude: endereco.latitude
         }
         
-        const response = await fetch("http://10.107.144.11:8080/v1/controle-usuario/endereco", {
+        const response = await fetch("http://localhost:8080/v1/controle-usuario/endereco", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(objetoEndereco)
@@ -427,7 +427,7 @@ async function uploadImagem(){
         };
 
         // Enviar dados para o backend
-        const backendResponse = await fetch("http://10.107.144.11:8080/v1/controle-usuario/midias", {
+        const backendResponse = await fetch("http://localhost:8080/v1/controle-usuario/midias", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -455,7 +455,7 @@ async function cadastroOcorrencia(event){
 
         const dadosOcorrencia = await capturarDados()
 
-        const response = await fetch("http://10.107.144.11:8080/v1/controle-usuario/ocorrencias", {
+        const response = await fetch("http://localhost:8080/v1/controle-usuario/ocorrencias", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(dadosOcorrencia)
