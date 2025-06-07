@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const imagemResult = await imagem.json();
 
         const objetoOcorrencia = `
-            <div style="max-width: 400px;">
+            <div style="width: 400px;" id=${ocorrencia[0].id_ocorrencia}>
                 <h3 style="margin: 0; font-size: 1.1rem; color: #333;">${ocorrencia[0].titulo}</h3>
                 <p style="margin: 5px 0; font-size: 0.9rem; color: #555;">${ocorrencia[0].descricao}</p>
                 <img src="${imagemResult.midia[0].url}" alt="Imagem da ocorrência" style="width: 100%; height: auto; border-radius: 6px; margin-top: 5px;">
@@ -144,4 +144,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     await getOcorrencias();
+});
+
+let feedVisivel = true;
+
+const buttonFeedOn = document.getElementById("botaoFeedOn")
+const buttonFeedOff = document.getElementById("botaoFeedOff")
+const feed = document.getElementById("feed")
+const mapWidth = document.getElementById("map");
+
+buttonFeedOn.addEventListener("click", () => {
+    feedVisivel = true;
+    feed.style.display = "none";
+    
+    map.style.width = "100%";
+    map.parentElement.style.width = "100%"; 
+});
+
+buttonFeedOff.addEventListener("click", () => {
+    feedVisivel = false;
+    feed.style.display = "block";
+    feed.style.width = "30%";
+    map.style.width = "70%";
 });
