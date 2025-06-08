@@ -235,5 +235,32 @@ header .pesquisa img {
 }
 
 @media (max-width: 393px){
+    #botaoFeedOff {
+        display: none;
+    }
 
+    .feed {
+        background-color: transparent;
+        width: 0%;
+    }
+
+    .feed header {
+        background-color: transparent;
+    }
+    
+   .feed header a {
+        margin-left: 3rem;
+    }
+
+    .feed header .pesquisa {
+        display: none;
+    }
+
+    .feed header #botaoFeedOn {
+        display: none;
+    }
+
+    .feed #ocorrencias {
+        display: none;
+    }
 }
