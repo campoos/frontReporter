@@ -422,4 +422,21 @@ main form #upload {
         font-size: 1rem;
         margin-bottom: 3rem;
     }
+
+    main #containerCEP {
+        width: 80%;
+        padding: 1rem;
+    }
+
+    main #containerCEP h1 {
+        color: black;
+    }
+
+    main #containerCEP .formCEP #inputCEP {
+        font-size: 1rem;
+    }
+
+    main #containerCEP .formCEP button {
+        margin-top: 1rem;
+    }
 }
