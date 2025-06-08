@@ -150,7 +150,7 @@ form select {
     justify-content: center;
 }
 
-@media (max-width: 375px){
+@media (max-width: 393px){
 
     img {
         height: 2rem;

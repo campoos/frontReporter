@@ -233,3 +233,7 @@ header .pesquisa img {
 
     transition: width 0.3s ease;
 }
+
+@media (max-width: 393px){
+
+}

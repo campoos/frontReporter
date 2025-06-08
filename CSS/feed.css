@@ -227,7 +227,7 @@ main .ocorrencias .ocorrencia .footerOcorrencia .descricao span {
     width: 100%;
 }
 
-@media(max-width:375px){
+@media(max-width:393px){
     body {
         height: 100dvh;
     }
@@ -283,7 +283,7 @@ main .ocorrencias .ocorrencia .footerOcorrencia .descricao span {
     }
 
     main .ocorrencias .ocorrencia .headerOcorrencia .enderecoOcorrencia h1 {
-        font-size: 10px;
+        font-size: 11px;
     }
 
     main .ocorrencias .ocorrencia .footerOcorrencia .icones {

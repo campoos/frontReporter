@@ -323,3 +323,114 @@ border-radius: 20px;
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+
+@media (max-width: 393px){
+    body h1 {
+        padding-bottom: 1rem;
+        font-size: 2.5rem;
+
+        height: 2.5rem;
+        width: 4rem;
+    }
+
+    body #texto {
+        position: absolute;
+        z-index: 4;
+
+        bottom: 0;
+
+        background-color: white;
+
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        padding: 0.5rem;
+
+        font-size: 1rem;
+    }
+
+    body #formularioFlutuante {
+        width: 90%;
+        height: 90%;
+    }
+
+    body #formularioFlutuante #botaoVoltarFormulario {
+        font-size: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    body #formularioFlutuante h2 {
+        font-size: 1rem;
+    }
+
+    body #formularioFlutuante form {
+        height: 100%;
+    }
+
+    body #formularioFlutuante form .dadosOcorrencia .tituloCategoria {
+        margin-bottom: 1rem;
+    }
+
+    body #formularioFlutuante form .dadosOcorrencia .tituloCategoria h2 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    body #formularioFlutuante form .dadosOcorrencia .tituloCategoria #titulo {
+        font-size: 1rem;
+    }
+
+    body #formularioFlutuante form .dadosOcorrencia .tituloCategoria #categoria {
+        font-size: 1rem;
+    }
+
+    body #formularioFlutuante form .dadosOcorrencia .campoDescricao h2 {
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    body #formularioFlutuante form .dadosOcorrencia .campoDescricao textarea {
+        font-size: 1rem;
+    }
+
+    body #formularioFlutuante form .dadosEndereco h2 {
+        font-size: 1rem;
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    body #formularioFlutuante form .dadosEndereco .logradouro #logradouro {
+        font-size: 1rem;
+    }
+
+    body #formularioFlutuante form .dadosEndereco .bairroCidade #bairro {
+        font-size: 1rem;
+    }
+
+    body #formularioFlutuante form .dadosEndereco .bairroCidade #cidade {
+        font-size: 1rem;
+    }
+
+    body #formularioFlutuante form .dadosEndereco .estadoCidade #estado {
+        font-size: 1rem;
+        margin-top: 0.1rem;
+    }
+
+    body #formularioFlutuante form #upload {
+        font-size: 1rem;
+        margin: 0.5rem;
+    }
+
+    body #formularioFlutuante form #buttonCEP {
+        margin: 0;
+        font-size: 1rem;
+        height: 2rem;
+    }
+
+    body #formularioFlutuante form #buttonRegistro {
+        margin: 0;
+        font-size: 1rem;
+        height: 2rem;
+    }
+}

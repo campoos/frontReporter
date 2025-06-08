@@ -196,7 +196,7 @@ main .container .cardMapa img {
     height: 10rem;
 }
 
-@media(max-width:375px){
+@media (max-width: 393px){
     body header {
         padding: 0.5rem;
     }
