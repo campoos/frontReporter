@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', async() => {
     const ocorrencias = document.getElementById("ocorrencias")   
 
-    const response = await fetch("http://localhost:8080/v1/controle-usuario/ocorrencias")
+    const response = await fetch("http://10.107.134.4:8080/v1/controle-usuario/ocorrencias")
 
     const result = await response.json();
 
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async() => {
                 <div class="footerOcorrencia">
                     <div class="icones">
                         <img src="../SRC/IMGS/FEED/plus.png" alt="">
-                        <img src="../SRC/IMGS/FEED/plus.png" alt="">
+                        <img src="../SRC/IMGS/FEED/chat.png" alt="" class="btn-comentario">
                     </div>
                     <div class="descricao">
                         <p>${item.titulo}</p>
@@ -35,4 +35,39 @@ document.addEventListener('DOMContentLoaded', async() => {
             </div>
         `     
     });
+
+    document.querySelectorAll('.btn-comentario').forEach(botao => {
+        botao.addEventListener('click', (e) => {
+          // Sobe até o pai com classe 'ocorrencia'
+          const ocorrencia = e.target.closest('.ocorrencia');
+          if (!ocorrencia) return;
+      
+          const id = ocorrencia.id; // o id já está no atributo id da div ocorrencia
+      
+          buscarComentarios(id);
+        });
+      });
+
+      function criarTelaComentario(result){
+        const body = document.getElementById("body")
+
+        const containerComentarios = document.createElement("div")
+      }
+
+      async function buscarComentarios(id) {
+        // Aqui você faz o fetch para buscar os comentários desse id
+        console.log(`Buscando comentários da ocorrência ${id}`);
+        // fetch(`/comentarios/${id}`) ...
+
+        const ocorrencia = await fetch(`http://10.107.134.4:8080/v1/controle-usuario/ocorrencias/${id}`);
+        const ocorrenciaResult = await ocorrencia.json();
+
+        const comentario = await fetch(`http://10.107.134.4:8080/v1/controle-usuario/comentario-por-ocorrencia/${id}`);
+        const comentarioResult = await comentario.json();
+
+        console.log(ocorrenciaResult)
+
+        criarTelaComentario(comentarioResult)
+      }
 });
+
