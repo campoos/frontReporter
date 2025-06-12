@@ -217,3 +217,12 @@ main .ocorrencias .ocorrencia .footerOcorrencia .descricao span {
     height: auto;
     width: 100%;
 }
+
+.containerComentarios {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 60%;
+    width: 60%;
+    background-color: black;
+}

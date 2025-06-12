@@ -11,7 +11,7 @@ let cepDigitadoManualmente = null;
 document.addEventListener('DOMContentLoaded', async() => {
     const categorias = document.getElementById("categoria")
 
-    const response = await fetch("http://10.107.134.4:8080/v1/controle-usuario/categoria")
+    const response = await fetch("http://localhost:8080/v1/controle-usuario/categoria")
 
     const result = await response.json();
 
@@ -42,7 +42,6 @@ async function getDadosEndereco(endereco) {
     const enderecoCompleto = `${endereco.logradouro}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}, Brasil`;
 
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(enderecoCompleto)}`;
-    console.log(url)
 
     try {
         const response = await fetch(url, {
@@ -102,7 +101,7 @@ async function cadastrarEndereco(endereco) {
             latitude: endereco.latitude
         }
         
-        const response = await fetch("http://10.107.134.4:8080/v1/controle-usuario/endereco", {
+        const response = await fetch("http://localhost:8080/v1/controle-usuario/endereco", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(objetoEndereco)
@@ -218,7 +217,7 @@ async function uploadImagem(){
         };
 
         // Enviar dados para o backend
-        const backendResponse = await fetch("http://10.107.134.4:8080/v1/controle-usuario/midias", {
+        const backendResponse = await fetch("http://localhost:8080/v1/controle-usuario/midias", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -246,7 +245,7 @@ async function cadastroOcorrencia(event){
 
         const dadosOcorrencia = await capturarDados()
 
-        const response = await fetch("http://10.107.134.4:8080/v1/controle-usuario/ocorrencias", {
+        const response = await fetch("http://localhost:8080/v1/controle-usuario/ocorrencias", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(dadosOcorrencia)
@@ -255,7 +254,6 @@ async function cadastroOcorrencia(event){
         const result = await response.json()
 
         if (result.status_code == 201){
-            console.log(result.result)
             localStorage.setItem("dadosOcorrencia", JSON.stringify(result.result))
             await uploadImagem()
         }

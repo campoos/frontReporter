@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', async() => {
     const ocorrencias = document.getElementById("ocorrencias")   
 
-    const response = await fetch("http://10.107.134.4:8080/v1/controle-usuario/ocorrencias")
+    const response = await fetch("http://localhost:8080/v1/controle-usuario/ocorrencias")
 
     const result = await response.json();
 
@@ -52,6 +52,10 @@ document.addEventListener('DOMContentLoaded', async() => {
         const body = document.getElementById("body")
 
         const containerComentarios = document.createElement("div")
+        containerComentarios.className = "containerComentarios"
+        containerComentarios.id = "containerComentarios"
+
+        body.appendChild(containerComentarios)
       }
 
       async function buscarComentarios(id) {
@@ -59,15 +63,13 @@ document.addEventListener('DOMContentLoaded', async() => {
         console.log(`Buscando comentários da ocorrência ${id}`);
         // fetch(`/comentarios/${id}`) ...
 
-        const ocorrencia = await fetch(`http://10.107.134.4:8080/v1/controle-usuario/ocorrencias/${id}`);
+        const ocorrencia = await fetch(`http://localhost:8080/v1/controle-usuario/ocorrencias/${id}`);
         const ocorrenciaResult = await ocorrencia.json();
+        const ocorrenciaExtract = ocorrenciaResult.ocorrencias
 
-        const comentario = await fetch(`http://10.107.134.4:8080/v1/controle-usuario/comentario-por-ocorrencia/${id}`);
-        const comentarioResult = await comentario.json();
+        console.log(ocorrenciaExtract)
 
-        console.log(ocorrenciaResult)
-
-        criarTelaComentario(comentarioResult)
+        criarTelaComentario(ocorrenciaExtract)
       }
 });
 

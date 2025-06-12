@@ -28,7 +28,7 @@ async function cadastrarUsuario(event){
             email: dadosRegistro.email
         }
 
-        const response1 = await fetch("http://10.107.134.4:8080/v1/controle-usuario/usuario/email", {
+        const response1 = await fetch("http://localhost:8080/v1/controle-usuario/usuario/email", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(emailValidacao)
@@ -40,7 +40,7 @@ async function cadastrarUsuario(event){
             alert("O email já tem um cadastro vinculado")
         }else{
             
-            const response2 = await fetch("http://10.107.134.4:8080/v1/controle-usuario/usuario", {
+            const response2 = await fetch("http://localhost:8080/v1/controle-usuario/usuario", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(dadosRegistro)
