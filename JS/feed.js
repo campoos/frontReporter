@@ -1,6 +1,21 @@
 "use strict"
 
 document.addEventListener('DOMContentLoaded', async() => {
+    const containerUsuario = document.getElementById("usuario")
+
+    const usuarioDados = JSON.parse(localStorage.getItem("dadosUsuario"))
+    const nomeUsuarioExtraido = usuarioDados[0].nome
+
+    const nomeUsuario = document.createElement("h1")
+    nomeUsuario.textContent = nomeUsuarioExtraido
+
+    const fotoUsuario = document.createElement("img")
+    fotoUsuario.src = "../SRC/IMGS/FEED/profile-user.png"
+
+    containerUsuario.appendChild(nomeUsuario)
+    containerUsuario.appendChild(fotoUsuario)
+
+
     const ocorrencias = document.getElementById("ocorrencias")   
 
     const response = await fetch("http://localhost:8080/v1/controle-usuario/ocorrencias")

@@ -101,10 +101,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         const imagemResult = await imagem.json();
 
         const objetoOcorrencia = `
-            <div style="width: 400px;" id=${ocorrencia[0].id_ocorrencia}>
+            <div style="max-width: 800px;" id=${ocorrencia[0].id_ocorrencia}>
                 <h3 style="margin: 0; font-size: 1.1rem; color: #333;">${ocorrencia[0].titulo}</h3>
-                <p style="margin: 5px 0; font-size: 0.9rem; color: #555;">${ocorrencia[0].descricao}</p>
-                <img src="${imagemResult.midia[0].url}" alt="Imagem da ocorrência" style="width: 100%; height: auto; border-radius: 6px; margin-top: 5px;">
+                <p style=" margin: 5px 0;
+  font-size: 0.9rem;
+  color: #555;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;">${ocorrencia[0].descricao}</p>
+                <img src="${imagemResult.midia[0].url}" alt="Imagem da ocorrência" style="max-width: 100%; height: auto; border-radius: 6px; margin-top: 5px;">
             </div>
         `;
 
@@ -126,10 +133,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const imagemResult = await imagem.json();
 
                 const objetoOcorrencia = `
-                    <div style="max-width: 250px;">
+                    <div style="max-width: 800px;">
                         <h3 style="margin: 0; font-size: 1.1rem; color: #333;">${item.titulo}</h3>
-                        <p style="margin: 5px 0; font-size: 0.9rem; color: #555;">${item.descricao}</p>
-                        <img src="${imagemResult.midia[0].url}" alt="Imagem da ocorrência" style="width: 100%; height: auto; border-radius: 6px; margin-top: 5px;">
+                        <p style=" margin: 5px 0;
+  font-size: 0.9rem;
+  color: #555;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;">${item.descricao}</p>
+                        <img src="${imagemResult.midia[0].url}" alt="Imagem da ocorrência" style="max-width: 100%; height: auto; border-radius: 6px; margin-top: 5px;">
                     </div>
                 `;
 

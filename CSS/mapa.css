@@ -234,6 +234,20 @@ header .pesquisa img {
     transition: width 0.3s ease;
 }
 
+#map .leaflet-pane.leaflet-map-pane .leaflet-pane.leaflet-popup-pane .leaflet-popup.leaflet-zoom-animated .leaflet-popup-content-wrapper {
+    min-width: 350px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#map .leaflet-pane.leaflet-map-pane .leaflet-pane.leaflet-popup-pane .leaflet-popup.leaflet-zoom-animated .leaflet-popup-content-wrapper img {
+    width: 100%;
+    min-width: 100%;
+}
+
+
 @media (max-width: 393px){
     #botaoFeedOff {
         display: none;

@@ -107,6 +107,17 @@ header .pesquisa img {
     height: 3.5rem;
 }
 
+header .usuario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+header .usuario h1 {
+    font-weight: 400;
+}
+
 main {
     width: 100%;
     height: 100%;
