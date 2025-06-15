@@ -62,15 +62,191 @@ document.addEventListener('DOMContentLoaded', async() => {
           buscarComentarios(id);
         });
       });
+      
+      function percorrerComentarios(comentarios) {
+        if(comentarios){
+            const containerComentarios = document.getElementById("containerComentariosPost")
+
+            comentarios.reverse().forEach(item => {
+                const dataCompleta = item.data_criacao
+                const dataReformulada = dataCompleta.split("T")[0]
+
+                containerComentarios.innerHTML += `
+                <div class="comentario" id=${item.id_comentario}>
+                    <div class="usuario">
+                        <img src="../SRC/IMGS/FEED/plus.png" alt="">
+                        <p>${item.usuario[0].nome}</p>
+                    </div>
+                    <span>${item.comentario}</span>
+                    <h4>${dataReformulada}</h4>
+                </div>`
+            });
+        }else{
+            const containerComentarios = document.getElementById("containerComentariosPost")
+
+            containerComentarios.innerHTML += `<h6>Parece que essse post ainda não tem comentários</h6>`
+      
+        }
+      }
+
+    function getDataAtual() {
+        const hoje = new Date();
+
+        const ano = hoje.getFullYear();
+        const mes = String(hoje.getMonth() + 1).padStart(2, '0'); // meses vão de 0 a 11
+        const dia = String(hoje.getDate()).padStart(2, '0');
+
+        return `${ano}-${mes}-${dia}`;
+    }
+
+      async function enviarComentario(result) {
+        const comentario = document.getElementById("inputComentario").value
+
+        const usuarioDados = JSON.parse(localStorage.getItem("dadosUsuario"))
+        const idExtraido = usuarioDados[0].id_usuario
+
+        const data = getDataAtual()
+
+        if (comentario){
+            const objeto = {
+                comentario: comentario,
+                data_criacao: data,
+                id_ocorrencia: result[0].id_ocorrencia,
+                id_usuario: idExtraido
+            }
+
+            console.log(objeto)
+
+            const response = await fetch("http://localhost:8080/v1/controle-usuario/comentario-ocorrencias", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(objeto)
+            })
+
+            console.log(response)
+
+            if (response.status === 201){
+                alert("comentario feito com sucesso")
+
+                const novaOcorrencia = await fetch(`http://localhost:8080/v1/controle-usuario/ocorrencias/${result[0].id_ocorrencia}`);
+                const novaResult = await novaOcorrencia.json();
+                const comentariosAtualizados = novaResult.ocorrencias[0].comentarios;
+
+                const container = document.getElementById("containerComentariosPost")
+                container.innerHTML = "" // limpa os comentários antigos
+
+                percorrerComentarios(comentariosAtualizados);
+            }else {
+                alert("não foi possível comentar")
+            }
+
+        }else {
+            alert("cara vai enviar nada mesmo?")
+        }
+      }
 
       function criarTelaComentario(result){
+        document.querySelector("main").classList.add("blur");
         const body = document.getElementById("body")
 
         const containerComentarios = document.createElement("div")
         containerComentarios.className = "containerComentarios"
         containerComentarios.id = "containerComentarios"
 
+        const botaoFechar = document.createElement("h5")
+        botaoFechar.textContent = "X"
+        botaoFechar.className = "botaoFecharComentario"
+
+        const containerFoto = document.createElement("div")
+        containerFoto.className = "containerFotoOcorrencia"
+        containerFoto.id = "containerFotoOcorrencia"
+
+        const fotoOcorrencia = document.createElement("img")
+        fotoOcorrencia.src = result[0].midia[0].url
+
+        const containerLateralComentarios = document.createElement("div")
+        containerLateralComentarios.className = "containerLateralComentarios"
+        containerLateralComentarios.id = "containerLateralComentarios"
+
+        const dadosPost = document.createElement("div")
+        dadosPost.className = "dadosPost"
+        dadosPost.id = "dadosPost"
+
+        const dadosUsuario = document.createElement("div")
+        dadosUsuario.className = "dadosUsuarioPost"
+        dadosUsuario.id = "dadosUsuarioPost"
+
+        const fotoUsuarioPost = document.createElement("img")
+        fotoUsuarioPost.src = "../SRC/IMGS/FEED/profile-user.png"
+
+        const nomeUsuarioPost = document.createElement("h2")
+        nomeUsuarioPost.textContent = result[0].usuario[0].nome
+
+        const descricaoPost = document.createElement("p")
+        descricaoPost.textContent = result[0].descricao
+
+        const footerComentarios = document.createElement("div")
+        footerComentarios.className = "footerTelaComentarios"
+
+        const like = document.createElement("img")
+        like.src = "../SRC/IMGS/FEED/profile-user.png"
+
+        const containerInputComentario = document.createElement("div")
+        containerInputComentario.className = "containerComentar"
+
+        const inputComentario = document.createElement("input")
+        inputComentario.placeholder = "Comente algo..."
+        inputComentario.id = "inputComentario"
+
+        const botaoEnviar = document.createElement("img")
+        botaoEnviar.src = "../SRC/IMGS/FEED/send.png"
+        botaoEnviar.id = "botaoEnviarComentario"
+
+        const containerComentariosPost = document.createElement("div")
+        containerComentariosPost.className = "containerComentariosPost"
+        containerComentariosPost.id = "containerComentariosPost"
+
+        const linhaDivisoria = document.createElement("hr")
+
+        const comentariosTitulo = document.createElement("h3")
+        comentariosTitulo.textContent = "Comentários"
+
+        containerFoto.appendChild(fotoOcorrencia)
+
+        dadosUsuario.appendChild(fotoUsuarioPost)
+        dadosUsuario.appendChild(nomeUsuarioPost)
+
+        dadosPost.appendChild(dadosUsuario)
+        dadosPost.appendChild(descricaoPost)
+
+        containerInputComentario.appendChild(inputComentario)
+        containerInputComentario.appendChild(botaoEnviar)
+
+        containerComentariosPost.appendChild(comentariosTitulo)
+
+        footerComentarios.appendChild(like)
+        footerComentarios.appendChild(containerInputComentario)
+
+        containerLateralComentarios.appendChild(dadosPost)
+        containerLateralComentarios.appendChild(linhaDivisoria)
+        containerLateralComentarios.appendChild(containerComentariosPost)
+        containerLateralComentarios.appendChild(footerComentarios)
+
+        containerComentarios.appendChild(containerFoto)
+        containerComentarios.appendChild(containerLateralComentarios)
+        containerComentarios.appendChild(botaoFechar)
+
         body.appendChild(containerComentarios)
+
+        percorrerComentarios(result[0].comentarios)
+
+        document.getElementById("botaoEnviarComentario")
+            .addEventListener("click", () => enviarComentario(result));
+
+        botaoFechar.addEventListener("click", () => {
+            containerComentarios.remove();
+            document.querySelector("main").classList.remove("blur");
+});
       }
 
       async function buscarComentarios(id) {
@@ -81,8 +257,6 @@ document.addEventListener('DOMContentLoaded', async() => {
         const ocorrencia = await fetch(`http://localhost:8080/v1/controle-usuario/ocorrencias/${id}`);
         const ocorrenciaResult = await ocorrencia.json();
         const ocorrenciaExtract = ocorrenciaResult.ocorrencias
-
-        console.log(ocorrenciaExtract)
 
         criarTelaComentario(ocorrenciaExtract)
       }

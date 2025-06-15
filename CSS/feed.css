@@ -233,7 +233,208 @@ main .ocorrencias .ocorrencia .footerOcorrencia .descricao span {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    height: 60%;
-    width: 60%;
+    height: 75%;
+    width: 80%;
     background-color: black;
+    border: 4px solid white;
+
+    display: flex;
+}
+
+.containerComentarios .containerFotoOcorrencia {
+    height: 100%;
+    width: 60%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.containerComentarios .containerFotoOcorrencia img {
+    height: 100%;
+}
+
+.containerComentarios .containerLateralComentarios {
+    background-color: black;
+    width: 40%;
+    height: 100%;
+    padding: 1rem;
+    gap: 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.containerComentarios .containerLateralComentarios .dadosPost {
+    width: 100%;
+    gap: 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+
+}
+
+.containerComentarios .containerLateralComentarios .dadosPost .dadosUsuarioPost {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+}
+
+.containerComentarios .containerLateralComentarios .dadosPost .dadosUsuarioPost img{
+    height: 50px;
+    
+    filter: invert(1);
+}
+
+.containerComentarios .containerLateralComentarios .dadosPost .dadosUsuarioPost h2{
+    color: white;
+    font-weight: 200;
+}
+
+.containerComentarios .containerLateralComentarios .dadosPost p {
+    color: white;
+    font-weight: 100;
+    font-size: 1.5rem;
+    width: 100%;
+}
+
+.containerComentarios .containerLateralComentarios hr {
+    margin-bottom: 0.5rem;
+}
+
+.containerComentarios .containerLateralComentarios .containerComentariosPost {
+    position: relative;
+    flex-grow: 1;
+    overflow-y: scroll;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.containerComentarios .containerLateralComentarios .containerComentariosPost h6 {
+    position: absolute;
+    color: rgb(214, 214, 214);
+    font-size: 1.5rem;
+
+    display: flex;
+    text-align: center;
+
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%);
+}
+
+.containerComentarios .containerLateralComentarios .containerComentariosPost .comentario {
+    padding-right: 1rem;
+}
+
+.containerComentarios .containerLateralComentarios .containerComentariosPost .comentario .usuario {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.containerComentarios .containerLateralComentarios .containerComentariosPost .comentario .usuario img {
+    height: 50px;
+    filter: invert(1);
+}
+
+.containerComentarios .containerLateralComentarios .containerComentariosPost .comentario .usuario p {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.containerComentarios .containerLateralComentarios .containerComentariosPost .comentario span {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.containerComentarios .containerLateralComentarios .containerComentariosPost .comentario h4 {
+    color: rgb(133, 133, 133);
+    font-size: 1rem;
+    font-weight: 100;
+    margin-top: 0.5rem;
+}
+
+.containerComentarios .containerLateralComentarios .containerComentariosPost h3 {
+    color: white;
+    font-size: 2rem;
+}
+
+.containerComentarios .containerLateralComentarios .footerTelaComentarios {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    gap: 1rem;
+}
+
+.containerComentarios .containerLateralComentarios .footerTelaComentarios img {
+    filter: invert(1);
+    height: 50px;
+}
+
+.containerComentarios .containerLateralComentarios .footerTelaComentarios .containerComentar {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    flex-grow: 1;
+}
+
+.containerComentarios .containerLateralComentarios .footerTelaComentarios .containerComentar input {
+    height: 100%;
+    width: 100%;
+    padding: 1rem;
+    padding-right: 4rem;
+
+    font-size: 1rem;
+    color: white;
+    
+    background-color: black;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+.containerComentarios .containerLateralComentarios .footerTelaComentarios .containerComentar img {
+    position: absolute;
+    right: 0;
+    height: 35px;
+    padding-right: 0.5rem;
+}
+
+.containerComentarios .containerLateralComentarios .footerTelaComentarios .containerComentar img:hover {
+    cursor: pointer;
+}
+
+.containerComentarios .botaoFecharComentario {
+    position: absolute;
+    right: 0;
+    color: white;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.164);
+    font-size: 2.5rem;
+    font-weight: 200;
+    padding: 0.5rem 1rem;
+}
+
+.containerComentarios .botaoFecharComentario:hover {
+    cursor: pointer;
+}
+
+.blur {
+    filter: blur(5px);
+    pointer-events: none; /* evita interações enquanto estiver borrado */
+    transition: filter 0.3s ease;
 }
