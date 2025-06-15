@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     const usuarioDados = JSON.parse(localStorage.getItem("dadosUsuario"))
     const nomeUsuarioExtraido = usuarioDados[0].nome
+    const idUsuarioExtraido = usuarioDados[0].id_usuario
 
     const nomeUsuario = document.createElement("h1")
     nomeUsuario.textContent = nomeUsuarioExtraido
@@ -22,34 +23,86 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     const result = await response.json();
 
-    result.ocorrencias.forEach(item => {
-        ocorrencias.innerHTML += `
-            <div class="ocorrencia" id="${item.id_ocorrencia}">
-                <div class="headerOcorrencia">
-                    <div class="usuario">
-                        <img src="../SRC/IMGS/FEED/plus.png" alt="">
-                        <h1>${item.usuario[0].nome}</h1>
-                    </div>
-                    <div class="enderecoOcorrencia">
-                        <h1>${item.endereco[0].logradouro}, ${item.endereco[0].cidade} - ${item.endereco[0].estado}</h1>
-                    </div>
+    async function validarCurtida(curtida) {
+        const response = await fetch("http://localhost:8080/v1/controle-usuario/buscar-voto", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(curtida)
+        });
+
+        if (response.status === 200) {
+            const result = await response.json();
+            return {
+                estado: "on",
+                id_voto: result.votes[0].id_voto
+            };
+        } else {
+            return {
+                estado: "off",
+                id_voto: null
+            };
+        }
+    }
+
+    for (const item of result.ocorrencias) {
+    const objetoCurtida = {
+        id_usuario: idUsuarioExtraido,
+        id_ocorrencia: item.id_ocorrencia
+    }
+
+    const statusCurtida = await validarCurtida(objetoCurtida);
+
+    const imagemLike = statusCurtida.estado === "on" ? "likeon.png" : "likeoff.png";
+    const idVoto = statusCurtida.id_voto;
+
+    let quantidadeVotos = 0
+
+    if (item.votos > 0){
+        quantidadeVotos = item.votos
+    }
+
+    let quantidadeComentarios = 0
+
+    if (item.comentarios){
+        quantidadeComentarios = item.comentarios.length
+    }
+
+    ocorrencias.innerHTML +=
+     `
+        <div class="ocorrencia" id="${item.id_ocorrencia}">
+            <div class="headerOcorrencia">
+                <div class="usuario">
+                    <img src="../SRC/IMGS/FEED/plus.png" alt="">
+                    <h1>${item.usuario[0].nome}</h1>
                 </div>
-                <div class="mainOcorrencia">
-                    <img src=${item.midia[0].url} alt="imagem da ocorrencia">
-                </div>
-                <div class="footerOcorrencia">
-                    <div class="icones">
-                        <img src="../SRC/IMGS/FEED/plus.png" alt="">
-                        <img src="../SRC/IMGS/FEED/chat.png" alt="" class="btn-comentario">
-                    </div>
-                    <div class="descricao">
-                        <p>${item.titulo}</p>
-                        <span>${item.descricao}</span>
-                    </div>
+                <div class="enderecoOcorrencia">
+                    <h1>${item.endereco[0].logradouro}, ${item.endereco[0].cidade} - ${item.endereco[0].estado}</h1>
                 </div>
             </div>
-        `     
-    });
+            <div class="mainOcorrencia">
+                <img src=${item.midia[0].url} alt="imagem da ocorrencia">
+            </div>
+            <div class="footerOcorrencia">
+                <div class="icones">
+                    <img 
+                        src="../SRC/IMGS/FEED/${imagemLike}" 
+                        alt="like" 
+                        class="btn-like"
+                        data-estado="${statusCurtida.estado}"
+                        data-id-voto="${idVoto || ""}"
+                        data-id-ocorrencia="${item.id_ocorrencia}"
+                    >
+                    <p>${quantidadeVotos}</p>
+                    <img src="../SRC/IMGS/FEED/chat.png" alt="" class="btn-comentario">
+                    <p>${quantidadeComentarios}</p>
+                </div>
+                <div class="descricao">
+                    <p>${item.titulo}</p>
+                    <span>${item.descricao}</span>
+                </div>
+            </div>
+        </div>
+    `;}
 
     document.querySelectorAll('.btn-comentario').forEach(botao => {
         botao.addEventListener('click', (e) => {
@@ -115,15 +168,11 @@ document.addEventListener('DOMContentLoaded', async() => {
                 id_usuario: idExtraido
             }
 
-            console.log(objeto)
-
             const response = await fetch("http://localhost:8080/v1/controle-usuario/comentario-ocorrencias", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(objeto)
             })
-
-            console.log(response)
 
             if (response.status === 201){
                 alert("comentario feito com sucesso")
@@ -243,8 +292,9 @@ document.addEventListener('DOMContentLoaded', async() => {
         document.getElementById("botaoEnviarComentario")
             .addEventListener("click", () => enviarComentario(result));
 
-        botaoFechar.addEventListener("click", () => {
+        botaoFechar.addEventListener("click", async() => {
             containerComentarios.remove();
+            await recarregarOcorrencias()
             document.querySelector("main").classList.remove("blur");
 });
       }
@@ -260,5 +310,137 @@ document.addEventListener('DOMContentLoaded', async() => {
 
         criarTelaComentario(ocorrenciaExtract)
       }
+
+      function aplicarEventosComentario() {
+            document.querySelectorAll('.btn-comentario').forEach(botao => {
+                botao.addEventListener('click', async (e) => {
+                    const ocorrencia = e.target.closest('.ocorrencia');
+                    if (!ocorrencia) return;
+
+                    const id = ocorrencia.id;
+                    await buscarComentarios(id);
+                });
+            });
+        }
+
+      async function recarregarOcorrencias() {
+
+        const main = document.querySelector('main');
+        const scrollTop = main.scrollTop;
+
+        // Congela o scroll da página
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollY}px`;
+        document.body.style.width = '100%';
+
+        ocorrencias.innerHTML = "";
+        const response = await fetch("http://localhost:8080/v1/controle-usuario/ocorrencias");
+        const result = await response.json();
+
+        for (const item of result.ocorrencias) {
+            const objetoCurtida = {
+                id_usuario: idUsuarioExtraido,
+                id_ocorrencia: item.id_ocorrencia
+            }
+
+            const statusCurtida = await validarCurtida(objetoCurtida);
+            const imagemLike = statusCurtida.estado === "on" ? "likeon.png" : "likeoff.png";
+            const idVoto = statusCurtida.id_voto;
+
+            let quantidadeVotos = 0
+
+            if (item.votos > 0){
+                quantidadeVotos = item.votos
+            }
+
+            let quantidadeComentarios = 0
+
+            if (item.comentarios){
+                quantidadeComentarios = item.comentarios.length
+            }
+
+            ocorrencias.innerHTML += `
+                <div class="ocorrencia" id="${item.id_ocorrencia}">
+                    <div class="headerOcorrencia">
+                        <div class="usuario">
+                            <img src="../SRC/IMGS/FEED/plus.png" alt="">
+                            <h1>${item.usuario[0].nome}</h1>
+                        </div>
+                        <div class="enderecoOcorrencia">
+                            <h1>${item.endereco[0].logradouro}, ${item.endereco[0].cidade} - ${item.endereco[0].estado}</h1>
+                        </div>
+                    </div>
+                    <div class="mainOcorrencia">
+                        <img src=${item.midia[0].url} alt="imagem da ocorrencia">
+                    </div>
+                    <div class="footerOcorrencia">
+                        <div class="icones">
+                            <img 
+                                src="../SRC/IMGS/FEED/${imagemLike}" 
+                                alt="like" 
+                                class="btn-like"
+                                data-estado="${statusCurtida.estado}"
+                                data-id-voto="${idVoto || ""}"
+                                data-id-ocorrencia="${item.id_ocorrencia}"
+                            >
+                            <p>${quantidadeVotos}</p>
+                            <img src="../SRC/IMGS/FEED/chat.png" alt="" class="btn-comentario">
+                            <p>${quantidadeComentarios}</p>
+                        </div>
+                        <div class="descricao">
+                            <p>${item.titulo}</p>
+                            <span>${item.descricao}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        aplicarEventosComentario();
+
+        setTimeout(() => {
+            main.scrollTop = scrollTop;  // volta para a posição anterior do main
+        }, 0);
+    }
+
+      document.addEventListener("click", async (event) => {
+        if (event.target.classList.contains("btn-like")) {
+            const btn = event.target;
+            const estadoAtual = btn.dataset.estado;
+            const idOcorrencia = btn.dataset.idOcorrencia;
+            const idVoto = btn.dataset.idVoto;
+
+            if (estadoAtual === "off") {
+                const objeto = {
+                    id_usuario: idUsuarioExtraido,
+                    id_ocorrencia: idOcorrencia,
+                    data_voto: getDataAtual()
+                };
+
+                const response = await fetch("http://localhost:8080/v1/controle-usuario/voto", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(objeto)
+                });
+
+                if (response.status === 201) {
+                    recarregarOcorrencias();
+                } else {
+                    alert("Erro ao curtir");
+                }
+            } else if (estadoAtual === "on" && idVoto) {
+                const response = await fetch(`http://localhost:8080/v1/controle-usuario/voto/${idVoto}`, {
+                    method: "DELETE"
+                });
+
+                if (response.status === 200) {
+                    recarregarOcorrencias();
+                } else {
+                    alert("Erro ao descurtir");
+                }
+            }
+        }
+    });
+
 });
 
